@@ -36,10 +36,10 @@ const login = catchError(async(req,res) => {
     const { email, password } = req.body
 
     const user = await User.findOne({where:{email}})
-    if (!user) return res.sendStatus(42)
+    if (!user) return res.sendStatus(401)
 
     const userPass = await bcrypt.compare(password,user.password)
-    if (!userPass) return res.sendStatus(42)
+    if (!userPass) return res.sendStatus(401)
 
     const token = jwt.sign(
         {user},
